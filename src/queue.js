@@ -1,6 +1,6 @@
 const { NotImplementedError } = require('../extensions/index.js');
 
-// const { ListNode } = require('../extensions/list-node.js');
+const { ListNode } = require('../extensions/list-node.js');
 
 /**
  * Implement the Queue with a given interface via linked list (use ListNode extension above).
@@ -14,23 +14,65 @@ const { NotImplementedError } = require('../extensions/index.js');
  * queue.getUnderlyingList() // returns { value: 3, next: null }
  */
 class Queue {
-
-  getUnderlyingList() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  constructor() {
+    this.start = undefined 
   }
 
-  enqueue(/* value */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  getUnderlyingList() {
+    return this.start
+  }
+
+  showArray() {
+    const arr = []
+    let cursor = this.start
+    while (true) {
+      arr.push(cursor.value)
+      if (cursor.next) {
+        cursor = cursor.next
+      } else {
+        break
+      }
+    }
+    console.log('Full list repr:', arr)
+  }
+  enqueue(value) {
+    if (!this.start) {
+      this.start = new ListNode(value)
+    } else {
+      this.getLast().next = new ListNode(value)
+    }
+
+  }
+  getLast() {
+    let current = this.start
+    while (true) {
+      if (current.next) {
+        current = current.next
+      } else {
+        break
+      }
+    }
+    // console.log(current)
+    return current
   }
 
   dequeue() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    const first = this.start
+    this.start = first.next
+    return  first.value
   }
 }
 
 module.exports = {
   Queue
 };
+
+// const queue = new Queue();
+// queue.enqueue(5);
+// queue.enqueue(6);
+// queue.enqueue(7);
+// queue.showArray()
+// console.log('dequeue:', queue.dequeue(), ' should be:',  5);
+// queue.showArray()
+// console.log('dequeue:', queue.dequeue(), ' should be:',  6)
+// queue.showArray()
